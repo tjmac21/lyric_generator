@@ -23,7 +23,6 @@ def searchPopularSongs(name):
     except:
         pass
     api_url = "https://api.genius.com/artists/{}/songs".format(id)
-    print(api_url)
     headers = {"authorization": token}
     params = {
         "sort": "popularity",
@@ -49,19 +48,17 @@ def scrapeLyricText(name):
         
         div = soup.select("div[class='lyrics']")
         if len(div) == 0:
-            print(url)
+            print('skipped', url)
             continue
         a_tags = div[0].find_all('a')
 
         curr_lyrics =  []
         for a_tag in a_tags:
             if len(a_tag.text) > 0 and a_tag.text[0] != "[":
-                curr_lyrics.append(a_tag.text.replace('\n', ' '))
+                curr_lyrics.append(a_tag.text.replace('\n', 'NEWLINE'))
         song_lyrics.append(curr_lyrics)
     return song_lyrics
 
-lyrics = scrapeLyricText("drake")
-print(len(lyrics))
 
 
 
